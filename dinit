@@ -1,0 +1,69 @@
+#!/bin/bash
+
+PROGNAME=$(basename "$0")
+PID_PATH=$1; shift
+COMMAND=$@
+SELFPID=$$
+WAITPID=0
+BOOTING=1
+
+log() {
+  echo "[${PROGNAME}] $1"
+}
+
+log_signal_action() {
+  log "Received signal $1, $2 container ..."
+  return
+}
+
+start_command() {
+  log "Starting ..."
+  $COMMAND  &
+  WAITPID=$!
+}
+
+wait_until_stop(){
+  pid=$1
+  while kill -0 "$pid"; do
+    sleep 1
+  done
+}
+pass_trap() {
+  pid=$(cat ${PID_PATH})
+  if [[ "x$pid" == "x" ]]; then
+    kill -$1 $WAITPID
+  else
+    kill -$1 $pid
+  fi
+}
+
+# http://stackoverflow.com/a/2183063/430128
+trapsig() {
+  func="$1"; shift
+  for sig ; do
+    trap "$func $sig" "$sig"
+  done
+}
+
+trapsig pass_trap HUP USR2 USR1 INT TERM QUIT CHLD ALRM PIPE
+
+start_command
+
+result=0
+
+while [[ $WAITPID != 0 && $WAITPID != "" ]]; do
+  if [[ $BOOTING == 1 ]]; then
+    wait $WAITPID
+  else
+    wait_until_stop $WAITPID
+  fi
+  BOOTING=0
+  result=$?
+  sleep 1
+  WAITPID=$(cat ${PID_PATH})
+
+done
+
+exit $result
+
+
