@@ -27,4 +27,5 @@ RUN apt-get update && apt-get upgrade -y && apt-get -y install \
     lsof strace ltrace \
     libsqlite3-0 libsqlite3-dev sqlite3 \
     unzip \
+    vim \
     libxml2-dev libxslt1-dev libc6-dev mysql-client libmysqlclient-dev libmagick++-dev && apt-get clean
