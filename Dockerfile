@@ -24,6 +24,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get -y install \
     openssl libssl-dev ssl-cert \
     libreadline6 libreadline6-dev \
     zlib1g zlib1g-dev \
+    lsof strace ltrace \
     libsqlite3-0 libsqlite3-dev sqlite3 \
     unzip \
     libxml2-dev libxslt1-dev libc6-dev mysql-client libmysqlclient-dev libmagick++-dev && apt-get clean

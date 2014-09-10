@@ -3,7 +3,6 @@
 PROGNAME=$(basename "$0")
 PID_PATH=$1; shift
 COMMAND=$@
-SELFPID=$$
 WAITPID=0
 BOOTING=1
 
