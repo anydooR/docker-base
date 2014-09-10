@@ -23,7 +23,7 @@ start_command() {
 
 wait_until_stop(){
   pid=$1
-  while kill -0 "$pid"; do
+  while kill -0 "$pid" 2>/dev/null ; do
     sleep 1
   done
 }
@@ -60,7 +60,7 @@ while [[ $WAITPID != 0 && $WAITPID != "" ]]; do
   result=$?
   sleep 1
   WAITPID=$(cat ${PID_PATH})
-
+  ! kill -0 "$WAITPID"  2>/dev/null && break
 done
 
 exit $result
