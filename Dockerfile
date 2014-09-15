@@ -14,6 +14,7 @@ RUN locale-gen ja_JP.UTF-8 && \
     locale-gen en_US.UTF-8
 ENV LANG en_US.UTF-8
 ENV DEBIAN_FRONTEND noninteractive
+RUN echo 'umask 002' > /etc/profile.d/umask.sh
 
 # apt
 RUN sed -i~ -e 's;http://archive.ubuntu.com/ubuntu;http://ftp.jaist.ac.jp/pub/Linux/ubuntu;' /etc/apt/sources.list
