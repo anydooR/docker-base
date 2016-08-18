@@ -1,0 +1,22 @@
+#!/bin/bash
+set -ex
+umask 002
+IMAGE_TYPE=$1
+
+unpack_dir=${IMAGE_STORE_PATH}/${APP_CONFIG_VERSION}
+wrapper_setting_path=${IMAGE_STORE_PATH}/${APP_CONFIG_VERSION}.tar.gz
+
+unpack_and_install(){
+  tar xzf ${wrapper_setting_path} -C ${unpack_dir} --strip-components 1 
+}
+
+mkdir -p ${unpack_dir}
+if [ ! -f ${unpack_dir}/initialized ]; then
+  if [ ${S3_CONFIG_BASE_URL} ]; then 
+    if [ ! -f ${wrapper_setting_path} ]; then 
+      aws s3 cp  ${S3_CONFIG_BASE_URL}/${IMAGE_TYPE}/${APP_CONFIG_VERSION}.tar.gz ${wrapper_setting_path}
+    fi 
+    unpack_and_install
+    touch ${unpack_dir}/initialized
+  fi
+fi
