@@ -1,5 +1,5 @@
 #!/bin/bash
-set -ex
+set -e
 umask 002
 IMAGE_TYPE=$1
 
