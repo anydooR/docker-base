@@ -1,4 +1,4 @@
-FROM debian:jessie
+FROM debian:jessie-slim
 ENV LANG=en_US.UTF-8 DEBIAN_FRONTEND=noninteractive 
 ENV ENTRYKIT_VERSION=0.4.0
 ENV SIGIL_VERSION=0.4.0

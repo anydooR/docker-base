@@ -1,7 +1,9 @@
 #!/bin/bash
 set -e
 umask 002
-IMAGE_TYPE=$1
+if [ "$1" ] ; then 
+  IMAGE_TYPE=$1
+fi 
 
 unpack_dir=${IMAGE_STORE_PATH}/${APP_CONFIG_VERSION}
 wrapper_setting_path=${IMAGE_STORE_PATH}/${APP_CONFIG_VERSION}.tar.gz

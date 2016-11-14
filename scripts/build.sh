@@ -4,10 +4,14 @@ echo 'umask 002' > /etc/profile.d/umask.sh
 cp /tmp/scripts/dinit /tmp/scripts/dget /usr/local/bin
 
 apt-get update
-apt-get upgrade -y --no-install-recommends
+apt-get upgrade -y
 
 # install default package 
 apt-get install -y --no-install-recommends  locales realpath libcurl4-openssl-dev zip libffi-dev \
+  vim \
+  lsof \
+  strace\
+  less  \
   unzip \
   git \
   bzip2 \
