@@ -1,4 +1,5 @@
-FROM debian:jessie-slim
+FROM ubuntu:xenial-20170214
+
 ENV LANG=en_US.UTF-8 DEBIAN_FRONTEND=noninteractive 
 ENV ENTRYKIT_VERSION=0.4.0
 ENV SIGIL_VERSION=0.4.0

@@ -1,4 +1,6 @@
-groupadd -g 200 rails && useradd --create-home -s /bin/bash -u 200 -g 200 rails ;
+#!/bin/bash 
+set -ex
+groupadd -g 200 rails && useradd --create-home -s /bin/bash -u 200 -g 200 rails 
 echo 'umask 002' > /etc/profile.d/umask.sh
 
 cp /tmp/scripts/dinit /tmp/scripts/dget /usr/local/bin
@@ -7,25 +9,27 @@ apt-get update
 apt-get upgrade -y
 
 # install default package 
-apt-get install -y --no-install-recommends  locales realpath libcurl4-openssl-dev zip libffi-dev \
+apt-get install -y --no-install-recommends  locales realpath zip  \
+  iproute2 \
   vim \
   lsof \
   strace\
   less  \
   unzip \
-  git \
   bzip2 \
   ca-certificates \
   curl \
   libgdbm3 \
-  libssl-dev \
-  libyaml-dev \
   procps \
   wget \
-  zlib1g-dev \
-  python \
   sudo \
-  python-pip
+  python-pip \
+  python-setuptools \
+  libcurl4-openssl-dev \
+  libffi-dev \
+  libssl-dev \
+  libyaml-dev \
+  zlib1g-dev 
 
 
 echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen && locale-gen 
@@ -51,5 +55,6 @@ cp -rf  /usr/share/zoneinfo/Japan /etc/localtime
 # install aws cli
 pip install awscli
 
-apt-get clean &&  rm -rf /var/lib/apt/lists/*
+apt-get purge -y --auto-remove libssl-dev  libyaml-dev  zlib1g-dev libcurl4-openssl-dev  libffi-dev 
+apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/man/?? /usr/share/man/??_*
 
