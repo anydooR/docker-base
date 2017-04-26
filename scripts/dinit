@@ -3,7 +3,7 @@
 PROGNAME=$(basename "$0")
 PID_PATH=$1; shift
 COMMAND=$@
-WAITPID=0
+WAITPID=
 BOOTING=1
 
 log() {
@@ -29,7 +29,7 @@ wait_until_stop(){
 }
 pass_trap() {
   pid=$(cat ${PID_PATH})
-  if [[ "x$pid" == "x" ]]; then
+  if [[ "$pid" == "" ]]; then
     kill -$1 $WAITPID
   else
     kill -$1 $pid
@@ -46,7 +46,12 @@ trapsig() {
 
 trapsig pass_trap HUP USR2 USR1 INT TERM QUIT CHLD ALRM PIPE
 
-start_command
+[ -f $PID_PATH ] && WAITPID=$(cat ${PID_PATH})
+if [ "$WAITPID" != "" ] && ( kill -0 "$WAITPID"  2>/dev/null) ; then 
+  BOOTING=0
+else 
+  start_command
+fi 
 
 result=0
 
@@ -59,10 +64,13 @@ while [[ $WAITPID != 0 && $WAITPID != "" ]]; do
   BOOTING=0
   result=$?
   sleep 1
-  WAITPID=$(cat ${PID_PATH})
+  if [ -f $PID_PATH ] ; then  
+    WAITPID=$(cat ${PID_PATH})
+  else 
+    WAITPID=0
+  fi 
   ! kill -0 "$WAITPID"  2>/dev/null && break
-done
+done 
 
 exit $result
-
 

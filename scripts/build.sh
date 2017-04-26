@@ -6,10 +6,13 @@ echo 'umask 002' > /etc/profile.d/umask.sh
 cp /tmp/scripts/dinit /tmp/scripts/dget /usr/local/bin
 
 apt-get update
-apt-get upgrade -y
 
 # install default package 
-apt-get install -y --no-install-recommends  locales realpath zip  \
+apt-get install -y --no-install-recommends  \
+  unattended-upgrades \
+  locales \
+  realpath \
+  zip \
   iproute2 \
   vim \
   lsof \
@@ -25,12 +28,15 @@ apt-get install -y --no-install-recommends  locales realpath zip  \
   sudo \
   python-pip \
   python-setuptools \
+  tzdata \
+  libcurl3 \
   libcurl4-openssl-dev \
   libffi-dev \
   libssl-dev \
   libyaml-dev \
   zlib1g-dev 
 
+unattended-upgrades -d  
 
 echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen && locale-gen 
 
