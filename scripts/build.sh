@@ -56,8 +56,7 @@ mv sigil /bin/sigil
 chmod +x /bin/sigil
 
 # time zone
-rm /etc/localtime
-ln -s  /usr/share/zoneinfo/Japan /etc/localtime
+ln -sf  /usr/share/zoneinfo/Japan /etc/localtime
 
 # install aws cli
 pip install awscli
