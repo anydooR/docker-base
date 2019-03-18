@@ -1,4 +1,4 @@
-FROM ubuntu:xenial-20180808
+FROM ubuntu:xenial-20190222
 
 ENV LANG=en_US.UTF-8 DEBIAN_FRONTEND=noninteractive
 ENV ENTRYKIT_VERSION=0.4.0
